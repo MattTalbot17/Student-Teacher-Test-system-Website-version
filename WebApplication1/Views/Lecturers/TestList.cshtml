@@ -1,0 +1,34 @@
+﻿@model IEnumerable<WebApplication1.Models.Test>
+
+@{
+    ViewBag.Title = "TestList";
+}
+
+<h2>Your Tests</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Test Name
+        </th>
+        <th>
+            Published
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TestName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Publish)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditTest", new { id=item.TestID, name = item.TestName }) |
+        </td>
+    </tr>
+}
+
+</table>

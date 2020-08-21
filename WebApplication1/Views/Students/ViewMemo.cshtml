@@ -1,0 +1,66 @@
+﻿@model IEnumerable<WebApplication1.Models.StudentAnswer>
+
+@{
+    ViewBag.Title = "ViewMemo";
+}
+
+<h2>View Memo</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Question
+        </th>
+        <th>
+            Possible Answer 1:
+        </th>
+        <th>
+            Possible Answer 2:
+        </th>
+        <th>
+            Possible Answer 3:
+        </th>
+        <th>
+            Possible Answer 4:
+        </th>
+        <th>
+            Correct Answer
+        </th>
+        <th>
+            Student Answer
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Question_Answer.Question)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Question_Answer.Answer1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Question_Answer.Answer2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Question_Answer.Answer3)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Question_Answer.Answer4)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Question_Answer.CorrectAnswer)
+            </td>>
+            <td>
+                @Html.DisplayFor(modelItem => item.Answer)
+            </td>>
+        </tr>
+    }
+</table>
+<div>
+    @Html.ActionLink("Back to List", "StudentViewMarks")
+</div>
+
+

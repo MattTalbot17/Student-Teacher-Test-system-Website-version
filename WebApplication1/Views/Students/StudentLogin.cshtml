@@ -1,0 +1,59 @@
+﻿@model WebApplication1.Models.Student
+
+@{
+    ViewBag.Title = "Student Login";
+}
+
+<h2>Student Login</h2>
+<span style="color:red;">@ViewBag.Error</span>
+@using (Html.BeginForm("StudentLogin", "Students", FormMethod.Post))
+{
+    <fieldset>
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        @if (@ViewBag.Message != null)
+        {
+            <div style="border: 1px solid red">
+                @ViewBag.Message
+            </div>
+        }
+        <table>
+            <tr>
+                <td>
+                    Student Number
+                </td>
+                <td>
+                    @Html.TextBoxFor(a => a.StudentNumber)
+                </td>
+                <td>
+                    @Html.ValidationMessageFor(a => a.StudentNumber)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Password
+                </td>
+                <td>
+                    @Html.PasswordFor(a => a.S_Password)
+                </td>
+                <td>
+                    @Html.ValidationMessageFor(a => a.S_Password)
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Login" />
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    @Html.ActionLink("Lecturer Log In", "LecturerLogin", "Lecturers")
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+}  

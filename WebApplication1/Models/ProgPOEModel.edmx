@@ -1,0 +1,444 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MCQDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Lecturer">
+          <Key>
+            <PropertyRef Name="LecturerID" />
+          </Key>
+          <Property Name="LecturerID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Firstname" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="L_Password" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Question_Answer">
+          <Key>
+            <PropertyRef Name="QuestionID" />
+          </Key>
+          <Property Name="QuestionID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="TestID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Question" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Answer1" Type="varchar" MaxLength="100" />
+          <Property Name="Answer2" Type="varchar" MaxLength="100" />
+          <Property Name="Answer3" Type="varchar" MaxLength="100" />
+          <Property Name="Answer4" Type="varchar" MaxLength="100" />
+          <Property Name="CorrectAnswer" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentNumber" />
+          </Key>
+          <Property Name="StudentNumber" Type="int" Nullable="false" />
+          <Property Name="Age" Type="int" Nullable="false" />
+          <Property Name="Firstname" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="S_Password" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Student_Test">
+          <Key>
+            <PropertyRef Name="StudentTestID" />
+          </Key>
+          <Property Name="StudentTestID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="TestName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="StudentNumber" Type="int" Nullable="false" />
+          <Property Name="TestMark" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StudentAnswer">
+          <Key>
+            <PropertyRef Name="StudentAnswerID" />
+          </Key>
+          <Property Name="StudentAnswerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentNumber" Type="int" Nullable="false" />
+          <Property Name="QuestionID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Answer" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="TestID" />
+          </Key>
+          <Property Name="TestID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="LecturerID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="TestName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Publish" Type="bit" />
+        </EntityType>
+        <Association Name="FK__Question___TestI__24927208">
+          <End Role="Test" Type="Self.Test" Multiplicity="1" />
+          <End Role="Question_Answer" Type="Self.Question_Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="TestID" />
+            </Principal>
+            <Dependent Role="Question_Answer">
+              <PropertyRef Name="TestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Student_T__Stude__36B12243">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="Student_Test" Type="Self.Student_Test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentNumber" />
+            </Principal>
+            <Dependent Role="Student_Test">
+              <PropertyRef Name="StudentNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentAn__Answe__5CD6CB2B">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="StudentAnswer" Type="Self.StudentAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentNumber" />
+            </Principal>
+            <Dependent Role="StudentAnswer">
+              <PropertyRef Name="StudentNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentAn__Quest__5DCAEF64">
+          <End Role="Question_Answer" Type="Self.Question_Answer" Multiplicity="1" />
+          <End Role="StudentAnswer" Type="Self.StudentAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question_Answer">
+              <PropertyRef Name="QuestionID" />
+            </Principal>
+            <Dependent Role="StudentAnswer">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Test__LecturerID__21B6055D">
+          <End Role="Lecturer" Type="Self.Lecturer" Multiplicity="1" />
+          <End Role="Test" Type="Self.Test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lecturer">
+              <PropertyRef Name="LecturerID" />
+            </Principal>
+            <Dependent Role="Test">
+              <PropertyRef Name="LecturerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MCQDatabaseModelStoreContainer">
+          <EntitySet Name="Lecturer" EntityType="Self.Lecturer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Question_Answer" EntityType="Self.Question_Answer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student_Test" EntityType="Self.Student_Test" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentAnswer" EntityType="Self.StudentAnswer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Test" EntityType="Self.Test" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Question___TestI__24927208" Association="Self.FK__Question___TestI__24927208">
+            <End Role="Test" EntitySet="Test" />
+            <End Role="Question_Answer" EntitySet="Question_Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Student_T__Stude__36B12243" Association="Self.FK__Student_T__Stude__36B12243">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Student_Test" EntitySet="Student_Test" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentAn__Answe__5CD6CB2B" Association="Self.FK__StudentAn__Answe__5CD6CB2B">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="StudentAnswer" EntitySet="StudentAnswer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentAn__Quest__5DCAEF64" Association="Self.FK__StudentAn__Quest__5DCAEF64">
+            <End Role="Question_Answer" EntitySet="Question_Answer" />
+            <End Role="StudentAnswer" EntitySet="StudentAnswer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Test__LecturerID__21B6055D" Association="Self.FK__Test__LecturerID__21B6055D">
+            <End Role="Lecturer" EntitySet="Lecturer" />
+            <End Role="Test" EntitySet="Test" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MCQDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Lecturer">
+          <Key>
+            <PropertyRef Name="LecturerID" />
+          </Key>
+          <Property Name="LecturerID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Firstname" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="L_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tests" Relationship="Self.FK__Test__LecturerID__21B6055D" FromRole="Lecturer" ToRole="Test" />
+        </EntityType>
+        <EntityType Name="Question_Answer">
+          <Key>
+            <PropertyRef Name="QuestionID" />
+          </Key>
+          <Property Name="QuestionID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TestID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Question" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Answer1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Answer2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Answer3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Answer4" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CorrectAnswer" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Test" Relationship="Self.FK__Question___TestI__24927208" FromRole="Question_Answer" ToRole="Test" />
+          <NavigationProperty Name="StudentAnswers" Relationship="Self.FK__StudentAn__Quest__5DCAEF64" FromRole="Question_Answer" ToRole="StudentAnswer" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentNumber" />
+          </Key>
+          <Property Name="StudentNumber" Type="Int32" Nullable="false" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="Firstname" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="S_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Student_Test" Relationship="Self.FK__Student_T__Stude__36B12243" FromRole="Student" ToRole="Student_Test" />
+          <NavigationProperty Name="StudentAnswers" Relationship="Self.FK__StudentAn__Answe__5CD6CB2B" FromRole="Student" ToRole="StudentAnswer" />
+        </EntityType>
+        <EntityType Name="Student_Test">
+          <Key>
+            <PropertyRef Name="StudentTestID" />
+          </Key>
+          <Property Name="StudentTestID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TestName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StudentNumber" Type="Int32" Nullable="false" />
+          <Property Name="TestMark" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Student" Relationship="Self.FK__Student_T__Stude__36B12243" FromRole="Student_Test" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="StudentAnswer">
+          <Key>
+            <PropertyRef Name="StudentAnswerID" />
+          </Key>
+          <Property Name="StudentAnswerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentNumber" Type="Int32" Nullable="false" />
+          <Property Name="QuestionID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Answer" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Question_Answer" Relationship="Self.FK__StudentAn__Quest__5DCAEF64" FromRole="StudentAnswer" ToRole="Question_Answer" />
+          <NavigationProperty Name="Student" Relationship="Self.FK__StudentAn__Answe__5CD6CB2B" FromRole="StudentAnswer" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="TestID" />
+          </Key>
+          <Property Name="TestID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LecturerID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TestName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Publish" Type="Boolean" />
+          <NavigationProperty Name="Lecturer" Relationship="Self.FK__Test__LecturerID__21B6055D" FromRole="Test" ToRole="Lecturer" />
+          <NavigationProperty Name="Question_Answer" Relationship="Self.FK__Question___TestI__24927208" FromRole="Test" ToRole="Question_Answer" />
+        </EntityType>
+        <Association Name="FK__Test__LecturerID__21B6055D">
+          <End Role="Lecturer" Type="Self.Lecturer" Multiplicity="1" />
+          <End Role="Test" Type="Self.Test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lecturer">
+              <PropertyRef Name="LecturerID" />
+            </Principal>
+            <Dependent Role="Test">
+              <PropertyRef Name="LecturerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Question___TestI__24927208">
+          <End Role="Test" Type="Self.Test" Multiplicity="1" />
+          <End Role="Question_Answer" Type="Self.Question_Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="TestID" />
+            </Principal>
+            <Dependent Role="Question_Answer">
+              <PropertyRef Name="TestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentAn__Quest__5DCAEF64">
+          <End Role="Question_Answer" Type="Self.Question_Answer" Multiplicity="1" />
+          <End Role="StudentAnswer" Type="Self.StudentAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question_Answer">
+              <PropertyRef Name="QuestionID" />
+            </Principal>
+            <Dependent Role="StudentAnswer">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Student_T__Stude__36B12243">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="Student_Test" Type="Self.Student_Test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentNumber" />
+            </Principal>
+            <Dependent Role="Student_Test">
+              <PropertyRef Name="StudentNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentAn__Answe__5CD6CB2B">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="StudentAnswer" Type="Self.StudentAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentNumber" />
+            </Principal>
+            <Dependent Role="StudentAnswer">
+              <PropertyRef Name="StudentNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MCQDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Lecturers" EntityType="Self.Lecturer" />
+          <EntitySet Name="Question_Answer" EntityType="Self.Question_Answer" />
+          <EntitySet Name="Students" EntityType="Self.Student" />
+          <EntitySet Name="Student_Test" EntityType="Self.Student_Test" />
+          <EntitySet Name="StudentAnswers" EntityType="Self.StudentAnswer" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Tests" EntityType="Self.Test" />
+          <AssociationSet Name="FK__Test__LecturerID__21B6055D" Association="Self.FK__Test__LecturerID__21B6055D">
+            <End Role="Lecturer" EntitySet="Lecturers" />
+            <End Role="Test" EntitySet="Tests" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Question___TestI__24927208" Association="Self.FK__Question___TestI__24927208">
+            <End Role="Test" EntitySet="Tests" />
+            <End Role="Question_Answer" EntitySet="Question_Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentAn__Quest__5DCAEF64" Association="Self.FK__StudentAn__Quest__5DCAEF64">
+            <End Role="Question_Answer" EntitySet="Question_Answer" />
+            <End Role="StudentAnswer" EntitySet="StudentAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Student_T__Stude__36B12243" Association="Self.FK__Student_T__Stude__36B12243">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Student_Test" EntitySet="Student_Test" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentAn__Answe__5CD6CB2B" Association="Self.FK__StudentAn__Answe__5CD6CB2B">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="StudentAnswer" EntitySet="StudentAnswers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MCQDatabaseModelStoreContainer" CdmEntityContainer="MCQDatabaseEntities">
+          <EntitySetMapping Name="Lecturers">
+            <EntityTypeMapping TypeName="MCQDatabaseModel.Lecturer">
+              <MappingFragment StoreEntitySet="Lecturer">
+                <ScalarProperty Name="LecturerID" ColumnName="LecturerID" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="L_Password" ColumnName="L_Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Question_Answer">
+            <EntityTypeMapping TypeName="MCQDatabaseModel.Question_Answer">
+              <MappingFragment StoreEntitySet="Question_Answer">
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="TestID" ColumnName="TestID" />
+                <ScalarProperty Name="Question" ColumnName="Question" />
+                <ScalarProperty Name="Answer1" ColumnName="Answer1" />
+                <ScalarProperty Name="Answer2" ColumnName="Answer2" />
+                <ScalarProperty Name="Answer3" ColumnName="Answer3" />
+                <ScalarProperty Name="Answer4" ColumnName="Answer4" />
+                <ScalarProperty Name="CorrectAnswer" ColumnName="CorrectAnswer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="MCQDatabaseModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="StudentNumber" ColumnName="StudentNumber" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="S_Password" ColumnName="S_Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Student_Test">
+            <EntityTypeMapping TypeName="MCQDatabaseModel.Student_Test">
+              <MappingFragment StoreEntitySet="Student_Test">
+                <ScalarProperty Name="StudentTestID" ColumnName="StudentTestID" />
+                <ScalarProperty Name="TestName" ColumnName="TestName" />
+                <ScalarProperty Name="StudentNumber" ColumnName="StudentNumber" />
+                <ScalarProperty Name="TestMark" ColumnName="TestMark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentAnswers">
+            <EntityTypeMapping TypeName="MCQDatabaseModel.StudentAnswer">
+              <MappingFragment StoreEntitySet="StudentAnswer">
+                <ScalarProperty Name="StudentAnswerID" ColumnName="StudentAnswerID" />
+                <ScalarProperty Name="StudentNumber" ColumnName="StudentNumber" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="MCQDatabaseModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tests">
+            <EntityTypeMapping TypeName="MCQDatabaseModel.Test">
+              <MappingFragment StoreEntitySet="Test">
+                <ScalarProperty Name="TestID" ColumnName="TestID" />
+                <ScalarProperty Name="LecturerID" ColumnName="LecturerID" />
+                <ScalarProperty Name="TestName" ColumnName="TestName" />
+                <ScalarProperty Name="Publish" ColumnName="Publish" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

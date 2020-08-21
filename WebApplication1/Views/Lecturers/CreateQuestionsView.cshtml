@@ -1,0 +1,76 @@
+﻿@model WebApplication1.Models.Question_Answer
+
+@{
+    ViewBag.Title = "CreateQuestionsView";
+}
+
+<h2>Create A Question</h2>
+<span style="color:red;">@ViewBag.Error</span>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            <div class="col-md-10">
+                Question:
+                @Html.EditorFor(model => model.Question, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Question, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                Answer 1:
+                @Html.EditorFor(model => model.Answer1, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Answer1, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                Answer 2:
+                @Html.EditorFor(model => model.Answer2, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Answer2, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                Answer 3:
+                @Html.EditorFor(model => model.Answer3, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Answer3, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                Answer 4:
+                @Html.EditorFor(model => model.Answer4, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Answer4, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                Correct Answer:
+                @Html.EditorFor(model => model.CorrectAnswer, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CorrectAnswer, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div>
+        <input type="submit" value="Add Question" class="btn btn-default" />
+    </div>
+
+    <div>
+        <br />
+        @Html.ActionLink("Submit Test and Questions", "ViewTest")
+    </div>
+    <div>
+        <br />
+        @Html.ActionLink("Back to Create Test", "CreateTest")
+    </div>
+}
+

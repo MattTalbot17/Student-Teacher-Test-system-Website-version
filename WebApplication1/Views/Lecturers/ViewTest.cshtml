@@ -1,0 +1,44 @@
+﻿@model IEnumerable<WebApplication1.Models.Student_Test>
+
+@{
+    ViewBag.Title = "ViewTest";
+    int count = 1;
+}
+
+<h2>Completed Tests</h2>
+<table class="table">
+    <tr>
+        <th>
+            Test Name:
+        </th>
+        <th>
+            Student Number:
+        </th>
+        <th>
+            Mark:
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TestName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TestMark)
+            </td>
+        </tr>
+        if (count == 1)
+        {
+            @Html.ActionLink("Edit Profile", "Edit", new { id = Session["LecturerID"] })
+        }
+        count++;
+
+    }
+
+</table>

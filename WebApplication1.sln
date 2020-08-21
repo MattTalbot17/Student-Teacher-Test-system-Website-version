@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.705
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{3679B4BF-F947-4A1D-9F8A-52F52CA0C27D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncryptionDLL", "EncryptionDLL\EncryptionDLL.csproj", "{0CF8201F-1B52-474C-AB25-E5F2AA239761}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3679B4BF-F947-4A1D-9F8A-52F52CA0C27D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3679B4BF-F947-4A1D-9F8A-52F52CA0C27D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3679B4BF-F947-4A1D-9F8A-52F52CA0C27D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3679B4BF-F947-4A1D-9F8A-52F52CA0C27D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CF8201F-1B52-474C-AB25-E5F2AA239761}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CF8201F-1B52-474C-AB25-E5F2AA239761}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CF8201F-1B52-474C-AB25-E5F2AA239761}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CF8201F-1B52-474C-AB25-E5F2AA239761}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3888D23D-B2F0-4AD7-8AF5-EBC47A822AA9}
+	EndGlobalSection
+EndGlobal

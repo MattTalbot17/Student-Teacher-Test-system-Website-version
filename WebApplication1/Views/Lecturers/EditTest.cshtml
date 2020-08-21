@@ -1,0 +1,42 @@
+﻿@model WebApplication1.Models.Test
+
+@{
+    ViewBag.Title = "EditTest";
+}
+
+<h2>EditTest</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-10">
+                Test Name:
+                @Html.DisplayFor(model => model.TestName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TestName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                Publish?
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Publish)
+                    @Html.ValidationMessageFor(model => model.Publish, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "TestList")
+</div>
